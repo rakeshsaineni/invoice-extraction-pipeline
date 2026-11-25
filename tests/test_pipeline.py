@@ -5,7 +5,7 @@ from invoiceflow.store import InvoiceStore
 
 
 def make(tmp_path, pos):
-    return Pipeline(InMemoryBroker(), InvoiceStore(), BlobStore(tmp_path / "blobs"), pos)
+    return Pipeline(InMemoryBroker(), InvoiceStore("sqlite:///:memory:"), BlobStore(tmp_path / "blobs"), pos)
 
 
 def test_end_to_end_no_bad_invoice_is_auto_approved(dataset, tmp_path):

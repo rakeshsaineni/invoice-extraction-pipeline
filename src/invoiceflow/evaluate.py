@@ -39,7 +39,7 @@ def _field_ok(field: str, got: dict, gt: dict) -> bool:
 def run(data: Path, out: Path, n: int | None = None) -> tuple[dict, list[str]]:
     gt = [json.loads(line) for line in (data / "ground_truth.jsonl").read_text().splitlines() if line.strip()][:n]
     pos = json.loads((data / "purchase_orders.json").read_text())
-    pipe = Pipeline(InMemoryBroker(), InvoiceStore(), BlobStore(out / "_blobs"), pos)
+    pipe = Pipeline(InMemoryBroker(), InvoiceStore("sqlite:///:memory:"), BlobStore(out / "_blobs"), pos)
     per_method: dict[str, dict] = {}
     rows, lat, seen_ids = [], {"text-layer": [], "ocr": []}, set()
     for g in gt:  # submission order matters: duplicates are only detectable after the original

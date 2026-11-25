@@ -16,8 +16,6 @@ jobs:
         ports: ["5432:5432"]
         options: >-
           --health-cmd "pg_isready -U postgres" --health-interval 5s --health-timeout 5s --health-retries 10
-    env:
-      DATABASE_URL: postgresql+psycopg://postgres:test@localhost:5432/invoiceflow
     steps:
       - uses: actions/checkout@v4
       - run: sudo apt-get update && sudo apt-get install -y tesseract-ocr
@@ -29,6 +27,8 @@ jobs:
       - run: ruff check src tests azure_function
       - name: Unit + integration tests (PostgreSQL JSONB included)
         run: pytest
+        env:
+          DATABASE_URL: postgresql+psycopg://postgres:test@localhost:5432/invoiceflow
       - name: Eval gate (no bad invoice may be auto-approved)
         run: invoiceflow generate -n 120 && invoiceflow eval --out reports-ci
       - uses: actions/upload-artifact@v4

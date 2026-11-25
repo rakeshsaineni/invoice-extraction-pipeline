@@ -8,7 +8,7 @@ from invoiceflow.store import InvoiceStore
 
 def test_upload_review_flow(dataset, tmp_path):
     root, gt, pos = dataset
-    c = TestClient(create_app(Pipeline(InMemoryBroker(), InvoiceStore(), BlobStore(tmp_path), pos)))
+    c = TestClient(create_app(Pipeline(InMemoryBroker(), InvoiceStore("sqlite:///:memory:"), BlobStore(tmp_path), pos)))
     bad = next(g for g in gt if g["problem"] in ("price_over_po", "qty_over_received", "unknown_po"))
     r = c.post("/invoices", params={"filename": "x.pdf"}, content=(root / bad["file"]).read_bytes(),
                headers={"content-type": "application/pdf"}).json()
