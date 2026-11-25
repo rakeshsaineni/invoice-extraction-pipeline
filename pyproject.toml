@@ -1,0 +1,48 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "invoiceflow"
+version = "0.1.0"
+description = "Event-driven invoice PDF extraction (text layer + OCR), validation and 3-way matching, on Kafka, Postgres and Azure Functions"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [{ name = "Rakesh Saineni" }]
+dependencies = [
+  "pdfplumber>=0.11",
+  "pypdfium2>=4",
+  "pytesseract>=0.3.10",
+  "pillow>=10.1",
+  "numpy>=1.26",
+  "fpdf2>=2.7",
+  "pydantic>=2.6",
+  "sqlalchemy>=2.0",
+  "fastapi>=0.110",
+  "uvicorn>=0.29",
+]
+
+[project.optional-dependencies]
+kafka = ["confluent-kafka>=2.3"]
+postgres = ["psycopg[binary]>=3.1"]
+dev = ["pytest>=8", "ruff>=0.5", "httpx>=0.27", "azure-functions>=1.18"]
+
+[project.scripts]
+invoiceflow = "invoiceflow.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+markers = ["postgres: needs DATABASE_URL pointing at PostgreSQL"]
+
+[tool.ruff]
+line-length = 120
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP"]
+ignore = ["B008", "B905"]

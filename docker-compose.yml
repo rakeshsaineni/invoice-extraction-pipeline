@@ -1,0 +1,15 @@
+# Local stack: API + PostgreSQL. (Generate data first: `invoiceflow generate`, mounted below.)
+services:
+  postgres:
+    image: postgres:16
+    environment:
+      POSTGRES_PASSWORD: invoiceflow
+      POSTGRES_DB: invoiceflow
+    ports: ["5432:5432"]
+  api:
+    build: .
+    environment:
+      DATABASE_URL: postgresql+psycopg://postgres:invoiceflow@postgres:5432/invoiceflow
+    volumes: ["./data:/app/data"]
+    ports: ["8000:8000"]
+    depends_on: [postgres]

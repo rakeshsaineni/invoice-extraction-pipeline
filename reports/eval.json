@@ -1,0 +1,48 @@
+{
+ "invoices": 300,
+ "by_method": {
+  "ocr": {
+   "docs": 81,
+   "exact": 40,
+   "invoice_number": 81,
+   "supplier_id": 81,
+   "po_number": 81,
+   "invoice_date": 81,
+   "due_date": 81,
+   "total": 81,
+   "lines": 40
+  },
+  "text-layer": {
+   "docs": 219,
+   "exact": 219,
+   "invoice_number": 219,
+   "supplier_id": 219,
+   "po_number": 219,
+   "invoice_date": 219,
+   "due_date": 219,
+   "total": 219,
+   "lines": 219
+  }
+ },
+ "straight_through_rate": 0.7133333333333334,
+ "escapes": [],
+ "planted_problems": 55,
+ "planted_caught": 55,
+ "deduplicated_on_upload": 2,
+ "caught_by_type": {
+  "duplicate": "12/12",
+  "price_over_po": "8/8",
+  "qty_over_received": "16/16",
+  "total_mismatch": "7/7",
+  "unknown_po": "12/12"
+ },
+ "clean_sent_to_review": 1,
+ "clean": 215,
+ "bad": 85,
+ "ocr_misreads_sent_to_review": 30,
+ "latency_ms_median": {
+  "text-layer": 11.5,
+  "ocr": 1534.4
+ },
+ "generated": "2026-11-25"
+}
